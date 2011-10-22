@@ -4,7 +4,7 @@
 
 ;; Author: mori_dev <mori.dev.asdf@gmail.com>
 ;; Keywords: github, search
-;; Prefix: gh:
+;; Prefix: gs:
 
 ;; Most of code taken from google.el (https://github.com/mcfunley/dotemacs/blob/master/google.el)
 
@@ -25,16 +25,16 @@
 
 ;; (require 'github-search)
 
-;; (defalias 'g 'gh:code-search)
-;; (defalias 'ga 'gh:all-search)
-;; (defalias 'gu 'gh:user-search)
-;; (defalias 'gr 'gh:repositories-search)
+;; (defalias 'g 'gs:code-search)
+;; (defalias 'ga 'gs:all-search)
+;; (defalias 'gu 'gs:user-search)
+;; (defalias 'gr 'gs:repositories-search)
 
 
 (eval-when-compile
   (require 'cl))
 
-(defvar gh:major-mode-lang-alist
+(defvar gs:major-mode-lang-alist
   '((c-mode                . "C")
     (c++-mode              . "C++")
     (css-mode              . "CSS")
@@ -60,48 +60,48 @@
     (diff-mode             . "Diff")))
 
 
-(defun* gh:code-search (term lang)
+(defun* gs:code-search (term lang)
   (interactive (list
-                (gh:read-term)
-                (gh:read-lang)))
-  (gh:browse-url (concat "https://github.com/search?type=Code&q=" term lang)))
+                (gs:read-term)
+                (gs:read-lang)))
+  (gs:browse-url (concat "https://github.com/search?type=Code&q=" term lang)))
 
 
-(defun* gh:read-lang ()
+(defun* gs:read-lang ()
   (let* ((inp (completing-read "Language: "
-                               (mapcar 'cdr gh:major-mode-lang-alist)
+                               (mapcar 'cdr gs:major-mode-lang-alist)
                                nil t
-                               (gh:get-lang)))
+                               (gs:get-lang)))
          (lang (replace-regexp-in-string "\s" "+" inp)))
     (if (> (length lang) 0)
         (concat "&language=" lang)
       "")))
 
-(defun* gh:read-term ()
+(defun* gs:read-term ()
   (read-from-minibuffer "Term: " (current-word)))
 
-(defun* gh:url-escape (s)
+(defun* gs:url-escape (s)
   (replace-regexp-in-string "\s" "+" s))
 
-(defun* gh:browse-url (url)
-  (browse-url (gh:url-escape url)))
+(defun* gs:browse-url (url)
+  (browse-url (gs:url-escape url)))
 
-(defun* gh:get-lang ()
-  (cdr (assoc major-mode gh:major-mode-lang-alist)))
+(defun* gs:get-lang ()
+  (cdr (assoc major-mode gs:major-mode-lang-alist)))
 
-(defun* gh:all-search (term)
-  (interactive (list (gh:read-term)))
+(defun* gs:all-search (term)
+  (interactive (list (gs:read-term)))
   (let ((url (concat "https://github.com/search?q=" term)))
-    (gh:browse-url url)))
+    (gs:browse-url url)))
 
-(defun* gh:user-search (term)
-  (interactive (list (gh:read-term)))
+(defun* gs:user-search (term)
+  (interactive (list (gs:read-term)))
   (let ((url (concat "https://github.com/search?type=Users&q=" term)))
-    (gh:browse-url url)))
+    (gs:browse-url url)))
 
-(defun* gh:repositories-search (term)
-  (interactive (list (gh:read-term)))
+(defun* gs:repositories-search (term)
+  (interactive (list (gs:read-term)))
   (let ((url (concat "https://github.com/search?type=Repositories&q=" term)))
-    (gh:browse-url url)))
+    (gs:browse-url url)))
 
 (provide 'github-search)
