@@ -25,10 +25,10 @@
 
 ;; (require 'github-search)
 
-(defalias 'g 'gh:code-search)
-(defalias 'ga 'gh:all-search)
-(defalias 'gu 'gh:user-search)
-(defalias 'gr 'gh:repositories-search)
+;; (defalias 'g 'gh:code-search)
+;; (defalias 'ga 'gh:all-search)
+;; (defalias 'gu 'gh:user-search)
+;; (defalias 'gr 'gh:repositories-search)
 
 
 (eval-when-compile
